@@ -7,15 +7,15 @@
 package com.candidoareas.arquivo.remessa.tratamento;
 
 
-import com.candidoareas.arquivo.remessa.annotations.Date;
-import com.candidoareas.arquivo.remessa.annotations.Number;
-import com.candidoareas.arquivo.remessa.annotations.Text;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import com.candidoareas.arquivo.remessa.annotations.RemessaDate;
+import com.candidoareas.arquivo.remessa.annotations.RemessaNumber;
+import com.candidoareas.arquivo.remessa.annotations.RemessaText;
 
 
 /**
@@ -59,7 +59,7 @@ public class Tratador
                 for (Annotation ant : ants)
                 {
 
-                    if ((ant instanceof Date) || (ant instanceof Number) || (ant instanceof Text))
+                    if ((ant instanceof RemessaDate) || (ant instanceof RemessaNumber) || (ant instanceof RemessaText))
                     {
                         counterAnts++;
                     }
@@ -86,17 +86,17 @@ public class Tratador
                     for (Annotation ant : ants)
                     {
 
-                        if (ant instanceof Text)
+                        if (ant instanceof RemessaText)
                         {
-                            orderFields[((Text) ant).position() - 1] = field.getName();
+                            orderFields[((RemessaText) ant).position() - 1] = field.getName();
                         }
-                        else if (ant instanceof Number)
+                        else if (ant instanceof RemessaNumber)
                         {
-                            orderFields[((Number) ant).position() - 1] = field.getName();
+                            orderFields[((RemessaNumber) ant).position() - 1] = field.getName();
                         }
-                        else if (ant instanceof Date)
+                        else if (ant instanceof RemessaDate)
                         {
-                            orderFields[((Date) ant).position() - 1] = field.getName();
+                            orderFields[((RemessaDate) ant).position() - 1] = field.getName();
                         }
                     }
                 }
@@ -120,20 +120,20 @@ public class Tratador
                         for (Annotation ant : ants)
                         {
 
-                            if (ant instanceof Text)
+                            if (ant instanceof RemessaText)
                             {
-                                value = str.substring(lastCountStr, (lastCountStr + ((Text) ant).length()));
-                                lastCountStr = lastCountStr + ((Text) ant).length();
+                                value = str.substring(lastCountStr, (lastCountStr + ((RemessaText) ant).length()));
+                                lastCountStr = lastCountStr + ((RemessaText) ant).length();
                             }
-                            else if (ant instanceof Number)
+                            else if (ant instanceof RemessaNumber)
                             {
-                                value = Integer.parseInt(str.substring(lastCountStr, (lastCountStr + ((Number) ant).length())));
-                                lastCountStr = lastCountStr + ((Number) ant).length();
+                                value = Integer.parseInt(str.substring(lastCountStr, (lastCountStr + ((RemessaNumber) ant).length())));
+                                lastCountStr = lastCountStr + ((RemessaNumber) ant).length();
                             }
-                            else if (ant instanceof Date)
+                            else if (ant instanceof RemessaDate)
                             {
-                                SimpleDateFormat fmt = new SimpleDateFormat(((Date) ant).pattern());
-                                value = fmt.parse(str.substring(lastCountStr, (lastCountStr + ((Date) ant).pattern().length())));
+                                SimpleDateFormat fmt = new SimpleDateFormat(((RemessaDate) ant).pattern());
+                                value = fmt.parse(str.substring(lastCountStr, (lastCountStr + ((RemessaDate) ant).pattern().length())));
                             }
                         }
 
@@ -173,7 +173,7 @@ public class Tratador
                 for (Annotation ant : ants)
                 {
 
-                    if ((ant instanceof Date) || (ant instanceof Number) || (ant instanceof Text))
+                    if ((ant instanceof RemessaDate) || (ant instanceof RemessaNumber) || (ant instanceof RemessaText))
                     {
                         counterAnts++;
                     }
@@ -202,17 +202,17 @@ public class Tratador
                     for (Annotation ant : ants)
                     {
 
-                        if (ant instanceof Text)
+                        if (ant instanceof RemessaText)
                         {
-                            orderFields[((Text) ant).position() - 1] = field.getName();
+                            orderFields[((RemessaText) ant).position() - 1] = field.getName();
                         }
-                        else if (ant instanceof Number)
+                        else if (ant instanceof RemessaNumber)
                         {
-                            orderFields[((Number) ant).position() - 1] = field.getName();
+                            orderFields[((RemessaNumber) ant).position() - 1] = field.getName();
                         }
-                        else if (ant instanceof Date)
+                        else if (ant instanceof RemessaDate)
                         {
-                            orderFields[((Date) ant).position() - 1] = field.getName();
+                            orderFields[((RemessaDate) ant).position() - 1] = field.getName();
                         }
                     }
                 }
@@ -233,29 +233,29 @@ public class Tratador
                         for (Annotation att : antf)
                         {
 
-                            if (att instanceof Text)
+                            if (att instanceof RemessaText)
                             {
-                                builder.append(String.format("%-" + ((Text) att).length() + "s",
-                                        ((fieldTo.get(obj) == null) ? "" : fieldTo.get(obj))).substring(0, ((Text) att).length()));
+                                builder.append(String.format("%-" + ((RemessaText) att).length() + "s",
+                                        ((fieldTo.get(obj) == null) ? "" : fieldTo.get(obj))).substring(0, ((RemessaText) att).length()));
                             }
 
-                            if (att instanceof Number)
+                            if (att instanceof RemessaNumber)
                             {
-                                builder.append(String.format("%0" + ((Number) att).length() + "d",
+                                builder.append(String.format("%0" + ((RemessaNumber) att).length() + "d",
                                         ((fieldTo.get(obj) == null) ? 0 : fieldTo.get(obj))));
                             }
 
-                            if (att instanceof Date)
+                            if (att instanceof RemessaDate)
                             {
 
                                 if (fieldTo.get(obj) != null)
                                 {
-                                    SimpleDateFormat fmt = new SimpleDateFormat(((Date) att).pattern());
+                                    SimpleDateFormat fmt = new SimpleDateFormat(((RemessaDate) att).pattern());
                                     builder.append(fmt.format((java.util.Date) fieldTo.get(obj)));
                                 }
                                 else
                                 {
-                                    builder.append((String.format("%-" + ((Date) att).pattern().length() + "s", "")));
+                                    builder.append((String.format("%-" + ((RemessaDate) att).pattern().length() + "s", "")));
                                 }
                             }
                         }
