@@ -7,15 +7,15 @@
 package com.candidoareas.arquivo.remessa.tratamento;
 
 
+import com.candidoareas.arquivo.remessa.annotations.RemessaDate;
+import com.candidoareas.arquivo.remessa.annotations.RemessaNumber;
+import com.candidoareas.arquivo.remessa.annotations.RemessaText;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import com.candidoareas.arquivo.remessa.annotations.RemessaDate;
-import com.candidoareas.arquivo.remessa.annotations.RemessaNumber;
-import com.candidoareas.arquivo.remessa.annotations.RemessaText;
 
 
 /**
