@@ -6,6 +6,7 @@
  */
 package com.candidoareas.arquivo.remessa.annotations;
 
+import com.candidoareas.arquivo.remessa.annotations.enums.RemessaComma;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -26,4 +27,8 @@ public @interface RemessaDate
     String pattern();
 
     int position();
+    
+    RemessaComma applyComma() default RemessaComma.WITHOUT_COMMA;
+    
+    String commaType() default ";";
 }
