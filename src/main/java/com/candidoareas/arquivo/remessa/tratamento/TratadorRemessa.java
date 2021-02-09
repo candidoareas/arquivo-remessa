@@ -1,4 +1,8 @@
 /*
+ * Código desenvolvido por candido.areas
+ * Para maiores informações, candido.areas@gmail.com
+ */
+/*
  * Desenvolvido por Cândido Areas
  * http://www.candidoareas.com
  *
@@ -10,6 +14,7 @@ package com.candidoareas.arquivo.remessa.tratamento;
 import com.candidoareas.arquivo.remessa.annotations.RemessaDate;
 import com.candidoareas.arquivo.remessa.annotations.RemessaNumber;
 import com.candidoareas.arquivo.remessa.annotations.RemessaText;
+import com.candidoareas.arquivo.remessa.annotations.enums.RemessaComma;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -222,6 +227,8 @@ public class TratadorRemessa
             {
                 String fieldName = orderFields[i];
 
+                boolean ultimoElemento = (i == (orderFields.length - 1));
+
                 for (Field fieldTo : obj.getClass().getDeclaredFields())
                 {
                     fieldTo.setAccessible(true);
@@ -235,18 +242,47 @@ public class TratadorRemessa
 
                             if (att instanceof RemessaText)
                             {
-                                builder.append(String.format("%-" + ((RemessaText) att).length() + "s",
-                                        ((fieldTo.get(obj) == null) ? "" : fieldTo.get(obj))).substring(0, ((RemessaText) att).length()));
+                                RemessaText rt = (RemessaText) att;
+
+                                String texto = ((fieldTo.get(obj) == null) ? "" : (fieldTo.get(obj) + ""));
+
+                                if (rt.applyComma() == RemessaComma.WITHOUT_COMMA)
+                                {
+                                    builder.append(String.format("%-" + ((RemessaText) att).length() + "s",
+                                            ((fieldTo.get(obj) == null) ? "" : fieldTo.get(obj))).substring(0,
+                                            ((RemessaText) att).length()));
+                                }
+                                else
+                                {
+                                    boolean fullComma = (rt.applyComma() == RemessaComma.FULL_COMMA);
+                                    String strComma = (fullComma ? rt.commaType() : "");
+                                    builder.append(texto.trim()).append((ultimoElemento ? strComma : rt.commaType()));
+                                }
                             }
 
                             if (att instanceof RemessaNumber)
                             {
-                                builder.append(String.format("%0" + ((RemessaNumber) att).length() + "d",
-                                        ((fieldTo.get(obj) == null) ? 0 : fieldTo.get(obj))));
+                                RemessaNumber rn = (RemessaNumber) att;
+
+                                String texto = ((fieldTo.get(obj) == null) ? "0" : (fieldTo.get(obj) + ""));
+
+                                if (rn.applyComma() == RemessaComma.WITHOUT_COMMA)
+                                {
+                                    builder.append(String.format("%0" + ((RemessaNumber) att).length() + "d",
+                                            ((fieldTo.get(obj) == null) ? 0 : fieldTo.get(obj))));
+                                }
+                                else
+                                {
+                                    boolean fullComma = (rn.applyComma() == RemessaComma.FULL_COMMA);
+                                    String strComma = (fullComma ? rn.commaType() : "");
+                                    builder.append(texto.trim()).append((ultimoElemento ? strComma : rn.commaType()));
+                                }
+
                             }
 
                             if (att instanceof RemessaDate)
                             {
+                                RemessaDate rn = (RemessaDate) att;
 
                                 if (fieldTo.get(obj) != null)
                                 {
@@ -256,6 +292,13 @@ public class TratadorRemessa
                                 else
                                 {
                                     builder.append((String.format("%-" + ((RemessaDate) att).pattern().length() + "s", "")));
+                                }
+
+                                if ((rn.applyComma() == RemessaComma.FULL_COMMA) || (rn.applyComma() == RemessaComma.SINGLE_COMMA))
+                                {
+                                    boolean fullComma = (rn.applyComma() == RemessaComma.FULL_COMMA);
+                                    String strComma = (fullComma ? rn.commaType() : "");
+                                    builder.append((ultimoElemento ? strComma : rn.commaType()));
                                 }
                             }
                         }
