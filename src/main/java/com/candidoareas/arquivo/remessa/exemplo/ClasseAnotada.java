@@ -10,6 +10,7 @@ package com.candidoareas.arquivo.remessa.exemplo;
 import com.candidoareas.arquivo.remessa.annotations.RemessaDate;
 import com.candidoareas.arquivo.remessa.annotations.RemessaNumber;
 import com.candidoareas.arquivo.remessa.annotations.RemessaText;
+import com.candidoareas.arquivo.remessa.annotations.enums.RemessaComma;
 
 import java.util.Date;
 
@@ -27,7 +28,8 @@ public class ClasseAnotada
     /** DOCUMENT ME! */
     @RemessaDate(
         pattern = "ddMMyyyy",
-        position = 4
+        position = 4,
+        applyComma = RemessaComma.FULL_COMMA
     )
     private Date data;
 
@@ -41,7 +43,8 @@ public class ClasseAnotada
     /** DOCUMENT ME! */
     @RemessaText(
         length = 2,
-        position = 1
+        position = 1,
+        applyComma = RemessaComma.FULL_COMMA
     )
     private String texto1;
 
