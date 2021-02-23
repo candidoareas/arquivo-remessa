@@ -275,6 +275,7 @@ public class TratadorRemessa
                                 {
                                     boolean fullComma = (rn.applyComma() == RemessaComma.FULL_COMMA);
                                     String strComma = (fullComma ? rn.commaType() : "");
+                                    texto = String.format("%0" + rn.length() + "d", Long.parseLong(texto.trim()));
                                     builder.append(texto.trim()).append((ultimoElemento ? strComma : rn.commaType()));
                                 }
 
